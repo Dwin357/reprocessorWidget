@@ -34,5 +34,12 @@
             <artifactId>commons-lang3</artifactId>
             <version>${apache.commons.lang.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.23.4</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
     </dependencies>    
 </project>

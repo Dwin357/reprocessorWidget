@@ -5,7 +5,9 @@
  */
 package io.github.dwin357.reconciler.file;
 
+import io.github.dwin357.reconciler.output.OutputVector;
 import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -14,10 +16,25 @@ import java.io.File;
 public class OctaCat {
     
     public static final String OUTPUT_FILE = "/filename.dat";
+    private OutputVector logger;
+    
+    public OctaCat(OutputVector vector) {
+        super();
+        this.logger = vector;
+    }
     
     public void writeUnprocessed(String reportPath, String batchPath, String tgtPath) {
         
-//        File xx = new File(getFileName(tgtPath));
+        File genFile = new File(getFileName(tgtPath));
+        try {
+            genFile.createNewFile();            
+        } catch (IOException ioe) {
+            logger.publish(String.format(
+                                    "Exception creating file:%s msg:%s", 
+                                    genFile.getPath(),
+                                    ioe.getMessage()));
+        }
+
     }
     
     public String getFileName(String tgtPath) {

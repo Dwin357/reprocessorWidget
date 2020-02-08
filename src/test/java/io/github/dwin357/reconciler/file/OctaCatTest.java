@@ -5,12 +5,14 @@
  */
 package io.github.dwin357.reconciler.file;
 
+import io.github.dwin357.reconciler.output.OutputVector;
 import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
+import org.mockito.Mock;
 
 /**
  *
@@ -20,12 +22,15 @@ public class OctaCatTest {
     
     @Rule
     public TemporaryFolder tgtDir = new TemporaryFolder();
+    
+    @Mock
+    private OutputVector outputMock;
 
     private OctaCat classUnderTest;
     
     @Before
     public void setUp() {
-        classUnderTest = new OctaCat();
+        classUnderTest = new OctaCat(outputMock);
     }
 
     @Test
@@ -54,7 +59,7 @@ public class OctaCatTest {
         assertFalse(tgtFile.exists());
 
         // tested act
-      //  classUnderTest.writeUnprocessed(reportPath, batchPath, tgtPath);
+        classUnderTest.writeUnprocessed(reportPath, batchPath, tgtPath);
         
         // assertions
         assertTrue(tgtFile.exists());
