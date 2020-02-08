@@ -1,0 +1,18 @@
+{
+    "load_data": {
+        "crel_id" : "123def456hij789abc",
+        "load_file": "batch.dat"
+    },
+    "source_fields": {
+        "uniq_fld": "bobby"
+    }
+}
+{
+    "load_data": {
+        "crel_id" : "abc123def456hij789",
+        "load_file": "batch.dat"
+    },
+    "source_fields": {
+        "uniq_fld": "alice"
+    }
+}

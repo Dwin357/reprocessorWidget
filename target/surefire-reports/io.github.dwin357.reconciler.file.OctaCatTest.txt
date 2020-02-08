@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: io.github.dwin357.reconciler.file.OctaCatTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.161 sec
