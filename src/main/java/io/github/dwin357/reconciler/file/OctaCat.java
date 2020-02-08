@@ -27,12 +27,17 @@ public class OctaCat {
         
         File genFile = new File(getFileName(tgtPath));
         try {
-            genFile.createNewFile();            
+            boolean exists = !genFile.createNewFile();
+            if(exists) {
+                logger.publish("file already exists at location, aborting");
+                return;
+            }
+
         } catch (IOException ioe) {
-        /*    logger.publish(String.format(
+            logger.publish(String.format(
                                     "Exception creating file:%s msg:%s", 
                                     genFile.getPath(),
-                                    ioe.getMessage())); */
+                                    ioe.getMessage())); 
         }
 
     }

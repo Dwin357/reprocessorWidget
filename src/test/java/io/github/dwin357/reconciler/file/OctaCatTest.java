@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import org.mockito.MockitoAnnotations;
 
 /**
  *
@@ -35,6 +36,7 @@ public class OctaCatTest {
     
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
         classUnderTest = new OctaCat(outputMock);
     }
 
