@@ -8,6 +8,10 @@ package io.github.dwin357.reconciler.file;
 import io.github.dwin357.reconciler.output.OutputVector;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -91,5 +95,36 @@ public class OctaCatTest {
         // assertions
         verify(outputMock, atLeastOnce()).publish(any());
     }
+    
+    @Test
+    public void test_scenario1_dat_with_one_error() throws IOException {
+        // setup        
+        //// args
+        String reportPath = "";        
+        String batchPath = getPathOfResource("/scenario_1/batch.dat");
+        String tgtPath = tgtDir.getRoot().getPath();
+        //// expected
+        File expectedFile = new File(getPathOfResource("/scenario_1/expected.dat"));
+        
+        // tested act
+        classUnderTest.writeUnprocessed(reportPath, batchPath, tgtPath);
+
+        // measurements
+        File actual = new File(classUnderTest.getFileName(tgtPath));
+        
+        // assertion
+        //// new file created
+        assertTrue("File was not created", actual.exists());
+        //// new file has expected content
+        assertTrue("Created file did not have expected content", FileUtils.contentEquals(actual, expectedFile));        
+    }
+    
+    
+    /////////   Utilities
+    
+    private String getPathOfResource(String resource) {
+        return getClass().getResource(resource).getPath();
+    }
+    
     
 }

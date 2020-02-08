@@ -11,10 +11,20 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <junit.version>4.12</junit.version>
         <hamcrest.version>1.3</hamcrest.version>
-        <apache.commons.lang.version>3.9</apache.commons.lang.version>        
+        <apache.commons.lang.version>3.9</apache.commons.lang.version>  
+        <org.json.version>20190722</org.json.version>
+        <junit-addons.version>1.4</junit-addons.version>    
     </properties>
     
     <dependencies>
+
+
+        
+
+
+
+
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -38,6 +48,13 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.23.4</version>
+            <scope>test</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
             <scope>test</scope>
             <type>jar</type>
         </dependency>
