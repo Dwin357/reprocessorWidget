@@ -97,7 +97,7 @@ public class OctaCatTest {
     }
     
     @Test
-    public void test_scenario1_dat_with_one_error() throws IOException {
+    public void test_scenario_1() throws IOException {
         // setup        
         //// args
         String reportPath = "";        
@@ -118,7 +118,29 @@ public class OctaCatTest {
         //// new file has expected content
         assertTrue("Created file did not have expected content", FileUtils.contentEquals(actual, expectedFile));        
     }
-    
+
+    @Test
+    public void test_secenario_2() throws IOException {
+        // setup
+       //// args
+       String reportPath = getPathOfResource("/scenario_2/report.ack");
+       String batchPath = getPathOfResource("/scenario_2/batch.dat");
+       String tgtPath = tgtDir.getRoot().getPath();
+       //// expected
+       File expectedFile = new File(getPathOfResource("/scenario_2/expected.dat"));
+       
+       // tested act
+        classUnderTest.writeUnprocessed(reportPath, batchPath, tgtPath);
+
+        // measurements
+        File actual = new File(classUnderTest.getFileName(tgtPath));
+        
+        // assertion
+        //// new file created
+        assertTrue("File was not created", actual.exists());
+        //// new file has expected content
+        assertTrue("Created file did not have expected content", FileUtils.contentEquals(actual, expectedFile));               
+    }
     
     /////////   Utilities
     
