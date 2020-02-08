@@ -57,7 +57,7 @@ public class OctaCatTest {
       //  classUnderTest.writeUnprocessed(reportPath, batchPath, tgtPath);
         
         // assertions
-    //    assertTrue(tgtFile.exists());
+        assertTrue(tgtFile.exists());
     }
     
 }
