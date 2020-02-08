@@ -7,12 +7,17 @@ package io.github.dwin357.reconciler.file;
 
 import io.github.dwin357.reconciler.output.OutputVector;
 import java.io.File;
+import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.Mock;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  *
@@ -63,6 +68,26 @@ public class OctaCatTest {
         
         // assertions
         assertTrue(tgtFile.exists());
+    }
+    
+    @Test
+    public void test_writeUnprocessed_outputsMsgWhenFileExists() throws IOException {
+        // setup
+        String reportPath = "";
+        String batchPath = "";
+        String tgtPath = tgtDir.getRoot().getPath();
+        
+        File tgtFile = new File(classUnderTest.getFileName(tgtPath));
+        tgtFile.createNewFile();
+        
+        // sanity ck
+        assertTrue(tgtFile.exists());
+
+        // tested act
+        classUnderTest.writeUnprocessed(reportPath, batchPath, tgtPath);
+        
+        // assertions
+        verify(outputMock, atLeastOnce()).publish(any());
     }
     
 }

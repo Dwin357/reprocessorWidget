@@ -29,10 +29,10 @@ public class OctaCat {
         try {
             genFile.createNewFile();            
         } catch (IOException ioe) {
-            logger.publish(String.format(
+        /*    logger.publish(String.format(
                                     "Exception creating file:%s msg:%s", 
                                     genFile.getPath(),
-                                    ioe.getMessage()));
+                                    ioe.getMessage())); */
         }
 
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="io.github.dwin357.reconciler.file.OctaCatTest" time="0.244" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="io.github.dwin357.reconciler.file.OctaCatTest" time="0.896" errors="1" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -13,7 +13,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="unknown"/>
-    <property name="test" value="io.github.dwin357.reconciler.file.OctaCatTest#test_writeUnprocessed_writeFile"/>
+    <property name="test" value="io.github.dwin357.reconciler.file.OctaCatTest#test_writeUnprocessed_outputsMsgWhenFileExists"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="user.dir" value="/home/dwin/NetBeansProjects/reconciler"/>
     <property name="java.runtime.version" value="1.8.0_201-b09"/>
@@ -43,7 +43,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/usr/lib/jvm/java-8-oracle/jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=io.github.dwin357.reconciler.file.OctaCatTest#test_writeUnprocessed_writeFile -Dmaven.ext.class.path=/home/dwin/netbeans-8.2/java/maven-nblib/netbeans-eventspy.jar surefire:test"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=io.github.dwin357.reconciler.file.OctaCatTest#test_writeUnprocessed_outputsMsgWhenFileExists -Dmaven.ext.class.path=/home/dwin/netbeans-8.2/java/maven-nblib/netbeans-eventspy.jar surefire:test"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -61,5 +61,55 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="io.github.dwin357.reconciler.file.OctaCatTest" name="test_writeUnprocessed_writeFile" time="0.047"/>
+  <testcase classname="io.github.dwin357.reconciler.file.OctaCatTest" name="test_writeUnprocessed_outputsMsgWhenFileExists" time="0.722">
+    <error message="
+Argument passed to verify() should be a mock but is null!
+Examples of correct verifications:
+    verify(mock).someMethod();
+    verify(mock, times(10)).someMethod();
+    verify(mock, atLeastOnce()).someMethod();
+    not: verify(mock.someMethod());
+Also, if you use @Mock annotation don&apos;t miss initMocks()" type="org.mockito.exceptions.misusing.NullInsteadOfMockException">org.mockito.exceptions.misusing.NullInsteadOfMockException: 
+Argument passed to verify() should be a mock but is null!
+Examples of correct verifications:
+    verify(mock).someMethod();
+    verify(mock, times(10)).someMethod();
+    verify(mock, atLeastOnce()).someMethod();
+    not: verify(mock.someMethod());
+Also, if you use @Mock annotation don&apos;t miss initMocks()
+	at io.github.dwin357.reconciler.file.OctaCatTest.test_writeUnprocessed_outputsMsgWhenFileExists(OctaCatTest.java:90)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:48)
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:45)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:123)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:104)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
+</error>
+  </testcase>
 </testsuite>
