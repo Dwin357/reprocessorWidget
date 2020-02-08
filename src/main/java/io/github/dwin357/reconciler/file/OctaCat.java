@@ -16,7 +16,7 @@ import java.io.IOException;
 public class OctaCat {
     
     public static final String OUTPUT_FILE = "/filename.dat";
-    private OutputVector logger;
+    private final OutputVector logger;
     
     public OctaCat(OutputVector vector) {
         super();
@@ -32,10 +32,10 @@ public class OctaCat {
                 logger.publish("file already exists at location, aborting");
 
             } else {
-   //             genFile.createNewFile();
+                genFile.createNewFile();
             }
 
-        } catch (RuntimeException ioe) {
+        } catch (IOException ioe) {
             logger.publish(String.format(
                                     "Exception creating file:%s msg:%s", 
                                     genFile.getPath(),
@@ -47,4 +47,8 @@ public class OctaCat {
     public String getFileName(String tgtPath) {
         return tgtPath + OUTPUT_FILE;
     }
+    
+    ///////////////  Private  ///////////////////
+    
+//    private void 
 }
