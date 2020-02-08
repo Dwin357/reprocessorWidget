@@ -8,9 +8,6 @@ package io.github.dwin357.reconciler.file;
 import io.github.dwin357.reconciler.output.OutputVector;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +17,6 @@ import org.junit.rules.TemporaryFolder;
 import static org.mockito.ArgumentMatchers.any;
 import org.mockito.Mock;
 import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import org.mockito.MockitoAnnotations;
 
@@ -60,7 +56,7 @@ public class OctaCatTest {
     @Test
     public void test_writeUnprocessed_writeFile() {
         // setup
-        String reportPath = "";
+        String reportPath = getPathOfResource("/scenario_1/report.ack");
         String batchPath = getPathOfResource("/scenario_1/batch.dat");
         String tgtPath = tgtDir.getRoot().getPath();
         
@@ -100,7 +96,7 @@ public class OctaCatTest {
     public void test_scenario_1() throws IOException {
         // setup        
         //// args
-        String reportPath = "";        
+        String reportPath = getPathOfResource("/scenario_1/report.ack");        
         String batchPath = getPathOfResource("/scenario_1/batch.dat");
         String tgtPath = tgtDir.getRoot().getPath();
         //// expected
@@ -116,7 +112,7 @@ public class OctaCatTest {
         //// new file created
         assertTrue("File was not created", actual.exists());
         //// new file has expected content
-        assertTrue("Created file did not have expected content", FileUtils.contentEquals(actual, expectedFile));        
+        assertTrue("Created file did not have expected content", FileUtils.contentEqualsIgnoreEOL(actual, expectedFile, "UTF-8"));        
     }
 
     @Test
@@ -139,7 +135,7 @@ public class OctaCatTest {
         //// new file created
         assertTrue("File was not created", actual.exists());
         //// new file has expected content
-        assertTrue("Created file did not have expected content", FileUtils.contentEquals(actual, expectedFile));               
+        assertTrue("Created file did not have expected content", FileUtils.contentEqualsIgnoreEOL(actual, expectedFile, "UTF-8"));               
     }
     
     /////////   Utilities
@@ -148,5 +144,8 @@ public class OctaCatTest {
         return getClass().getResource(resource).getPath();
     }
     
+    private void printFile(File file) throws IOException {
+        System.out.println(FileUtils.readFileToString(file));
+    }
     
 }

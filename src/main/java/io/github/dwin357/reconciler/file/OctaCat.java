@@ -5,15 +5,17 @@
  */
 package io.github.dwin357.reconciler.file;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.dwin357.reconciler.output.OutputVector;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.stream.Stream;
 
 /**
@@ -41,9 +43,9 @@ public class OctaCat {
 
         try {
             Stream<String> mixedEntries = loadFile(batchPath);
-            generateFile(genFile, mixedEntries);
+            Set<String> reloads = parseFails(reportPath);
+            generateFile(genFile, mixedEntries, reloads);
         } catch (IOException ioe) {
-            System.out.println("top line at explosion");
             logger.publish(String.format(
                                     "Exception creating file:%s msg:%s", 
                                     genFile.getPath(),
@@ -57,27 +59,68 @@ public class OctaCat {
     
     ///////////////  Private  ///////////////////
     
-    private Stream<String> loadFile(String path) throws IOException {
+    private Set<String> parseFails(String path) throws IOException {
         try {
-            return Files.lines(Paths.get(path));
-        } catch (IOException ex) {            
-            System.out.println("load file at explosion");
+            Set<String> excludes = new HashSet<>();
+
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(Files.readAllBytes(Paths.get(path)));
+            Iterator<JsonNode> errors = root.path("errors").elements();
+
+            JsonNode er;
+            while(errors.hasNext()) {
+                er = errors.next();
+                excludes.add(er.path("cor_id").asText());
+            }
+            
+            return excludes;
+            
+        } catch (IOException ex) {
             throw new IOException(String.format("Failed loading file %s aborting", path), ex); 
         }
     }
     
-    private void generateFile(File genFile, Stream<String> mixedEntries) throws IOException {
+    private Stream<String> loadFile(String path) throws IOException {
         try {
-            
+            return Files.lines(Paths.get(path));
+        } catch (IOException ex) {            
+            throw new IOException(String.format("Failed loading file %s aborting", path), ex); 
+        }
+    }
+    
+    private void generateFile(File genFile, Stream<String> mixedEntries, Set<String> reloads) throws IOException {
+        try {
+            ObjectMapper mapper = new ObjectMapper();            
             try(PrintWriter pw = new PrintWriter(
                                     Files.newBufferedWriter(
                                             Paths.get(genFile.getPath())))) {
-                mixedEntries.forEach(pw::println);
+                mixedEntries
+                        .filter(ln -> isErroredEntry(ln, reloads, mapper))
+                        .forEach(pw::println);
             }
             
         } catch (IOException ex) {
-            System.out.println("gen file at explosion");
             throw new IOException(String.format("Failed writing file %s aborting", genFile.getPath()), ex);            
+        }
+    }
+    
+    private boolean isErroredEntry(String line, Set<String> fails, ObjectMapper mapper) {
+        try {
+            
+            
+            JsonNode entry = mapper.readTree(line);
+            String id = entry.path("load_data").path("crel_id").asText();
+
+            System.out.println(String.format("id:%s is in?%b set:%s", 
+                    id, fails.contains(id), fails.toString()));
+
+  
+            return fails.contains(id);
+            
+        } catch (IOException ex) {
+            logger.publish("Error processing entry");
+            logger.publish(line);
+            return false;
         }
     }
 }
