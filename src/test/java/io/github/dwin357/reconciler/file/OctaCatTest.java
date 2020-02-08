@@ -61,7 +61,7 @@ public class OctaCatTest {
     public void test_writeUnprocessed_writeFile() {
         // setup
         String reportPath = "";
-        String batchPath = "";
+        String batchPath = getPathOfResource("/scenario_1/batch.dat");
         String tgtPath = tgtDir.getRoot().getPath();
         
         File tgtFile = new File(classUnderTest.getFileName(tgtPath));

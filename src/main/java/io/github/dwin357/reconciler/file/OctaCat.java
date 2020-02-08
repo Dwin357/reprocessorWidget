@@ -8,6 +8,13 @@ package io.github.dwin357.reconciler.file;
 import io.github.dwin357.reconciler.output.OutputVector;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 /**
  *
@@ -26,22 +33,22 @@ public class OctaCat {
     public void writeUnprocessed(String reportPath, String batchPath, String tgtPath) {
         
         File genFile = new File(getFileName(tgtPath));
+
+        if(genFile.exists()) {
+            logger.publish(String.format("file already exists at location %s, aborting", genFile.getPath()));
+            return;
+        }
+
         try {
-
-            if(genFile.exists()) {
-                logger.publish("file already exists at location, aborting");
-
-            } else {
-                genFile.createNewFile();
-            }
-
+            Stream<String> mixedEntries = loadFile(batchPath);
+            generateFile(genFile, mixedEntries);
         } catch (IOException ioe) {
+            System.out.println("top line at explosion");
             logger.publish(String.format(
                                     "Exception creating file:%s msg:%s", 
                                     genFile.getPath(),
                                     ioe.getMessage())); 
         }
-
     }
     
     public String getFileName(String tgtPath) {
@@ -50,5 +57,27 @@ public class OctaCat {
     
     ///////////////  Private  ///////////////////
     
-//    private void 
+    private Stream<String> loadFile(String path) throws IOException {
+        try {
+            return Files.lines(Paths.get(path));
+        } catch (IOException ex) {            
+            System.out.println("load file at explosion");
+            throw new IOException(String.format("Failed loading file %s aborting", path), ex); 
+        }
+    }
+    
+    private void generateFile(File genFile, Stream<String> mixedEntries) throws IOException {
+        try {
+            
+            try(PrintWriter pw = new PrintWriter(
+                                    Files.newBufferedWriter(
+                                            Paths.get(genFile.getPath())))) {
+                mixedEntries.forEach(pw::println);
+            }
+            
+        } catch (IOException ex) {
+            System.out.println("gen file at explosion");
+            throw new IOException(String.format("Failed writing file %s aborting", genFile.getPath()), ex);            
+        }
+    }
 }
